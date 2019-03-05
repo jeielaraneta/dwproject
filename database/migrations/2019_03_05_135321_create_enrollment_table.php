@@ -15,6 +15,10 @@ class CreateEnrollmentTable extends Migration
     {
         Schema::create('enrollment', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('school_year', 20);
+            $table->enum('semester', [0,1,2]);
+            $table->string('college', 50);
+            $table->string('courses', 10);
             $table->timestamps();
         });
     }

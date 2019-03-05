@@ -15,6 +15,8 @@ class CreateBudgetAllocationTable extends Migration
     {
         Schema::create('budget_allocation', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('school_year', 20);
+            $table->string('department', 75);
             $table->timestamps();
         });
     }
