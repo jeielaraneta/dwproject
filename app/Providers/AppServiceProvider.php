@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace dwproject\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
