@@ -29,9 +29,16 @@ class EnrollmentController extends Controller
     public function index()
     {
         $data = $this->enrollment->get();
-        $uniqueSchoolYears = $this->getUniqueSchoolYear($data);
 
-        $output = $this->getEnrollmentCount($data, 'school_year', $uniqueSchoolYears);
+        $uniqueSchoolYears = $this->getUniqueSchoolYear($data);
+        $uniqueSemesters = $this->getUniqueSemester($data);
+        $uniqueColleges = $this->getUniqueCollege($data);
+        $uniqueCourses = $this->getUniqueCourse($data);
+
+        $countPerSchoolYear = $this->getEnrollmentCountPerSchoolYear($data, $uniqueSchoolYears);
+        $countPerSchoolYearSemester = $this->getEnrollmentCountPerSchoolYearSemester($data, $uniqueSchoolYears, $uniqueSemesters);
+        $countPerSchoolYearSemesterCollge = $this->getEnrollmentCountPerSchoolYearSemesterCollege($data, $uniqueSchoolYears, $uniqueSemesters, $uniqueColleges);
+        $countPerSchoolYearSemesterCollgeCourses = $this->getEnrollmentCountPerSchoolYearSemesterCollegeCourse($data, $uniqueSchoolYears, $uniqueSemesters, $uniqueColleges, $uniqueCourses);
        
         //$data->unique('school_year')
         //return json_encode($data[0]);
@@ -43,7 +50,7 @@ class EnrollmentController extends Controller
             'state' => 'CA'
         ])*/
 
-        return $output;
+        return $countPerSchoolYearSemesterCollgeCourses;
         //return view('enrollment', ['data' => json_encode($data->countBy())]);
     }
 
@@ -59,11 +66,95 @@ class EnrollmentController extends Controller
         return $schoolYearsArr;
     }
 
-    private function getEnrollmentCount($data, $tableColumn, $valueArr) {
+    private function getUniqueSemester($data) {
+        
+        $rows = $data->unique('semester');
+        $semestersArr = array();
+
+        foreach ($rows as $row => $value) {
+            $semestersArr[] = $value->semester;
+        }
+
+        return $semestersArr;
+    }
+
+    private function getUniqueCollege($data) {
+        
+        $rows = $data->unique('college');
+        $collegesArr = array();
+
+        foreach ($rows as $row => $value) {
+            $collegesArr[] = $value->college;
+        }
+
+        return $collegesArr;
+    }
+
+    private function getUniqueCourse($data) {
+        
+        $rows = $data->unique('course');
+        $coursesArr = array();
+
+        foreach ($rows as $row => $value) {
+            $coursesArr[] = $value->course;
+        }
+
+        return $coursesArr;
+    }
+
+    private function getEnrollmentCountPerSchoolYear($data, $valueArr) {
 
         $output = array();
         foreach ($valueArr as $key) {
-            $output[$key] = $data->where($tableColumn, $key)->count();
+            $output[$key] = $data->where('school_year', $key)->count();
+        }
+
+        return $output;
+    }
+
+    private function getEnrollmentCountPerSchoolYearSemester($data, $schoolYearArr, $semesterArr) {
+
+        $output = array();
+        foreach ($schoolYearArr as $schoolYear) {
+            foreach ($semesterArr as $semester) {
+                $output[$schoolYear][$semester] = $data->where('school_year', $schoolYear)->where('semester', $semester)->count();
+            }
+        }
+
+        return $output;
+    }
+
+    private function getEnrollmentCountPerSchoolYearSemesterCollege($data, $schoolYearArr, $semesterArr, $collgeArr) {
+
+        $output = array();
+        foreach ($schoolYearArr as $schoolYear) {
+            foreach ($semesterArr as $semester) {
+                foreach ($collgeArr as $collge) {
+                    $output[$schoolYear][$semester][$collge] = $data->where('school_year', $schoolYear)
+                                                                    ->where('semester', $semester)
+                                                                    ->where('college', $collge)->count();
+                }
+            }
+        }
+
+        return $output;
+    }
+
+    private function getEnrollmentCountPerSchoolYearSemesterCollegeCourse($data, $schoolYearArr, $semesterArr, $collgeArr, $courseArr) {
+
+        $output = array();
+        foreach ($schoolYearArr as $schoolYear) {
+            foreach ($semesterArr as $semester) {
+                foreach ($collgeArr as $college) {
+                    foreach ($courseArr as $course) {
+                        $output[$schoolYear][$semester][$college][$course] = $data->where('school_year', $schoolYear)
+                                                                    ->where('semester', $semester)
+                                                                    ->where('college', $college)
+                                                                    ->where('course', $course)->count();
+                    }
+                    
+                }
+            }
         }
 
         return $output;
