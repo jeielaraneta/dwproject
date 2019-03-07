@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    {{ $data }}
                 </div>
             </div>
         </div>
