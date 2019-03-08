@@ -7,14 +7,15 @@
             <div class="card">
                 <div class="card-header">Enrollment</div>
 
-                <div class="card-body">
+                <div class="card-body" id="container">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
 
-                    {{ $data }}
+                    
+
                 </div>
             </div>
         </div>

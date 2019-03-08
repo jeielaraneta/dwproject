@@ -18,6 +18,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
 </head>
 <body>
     <div id="app">
@@ -89,5 +92,7 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ mix('js/app.js')}}"></script>
+    <script src="{{ mix('js/enrollmentDashboard.js')}}"></script>
 </body>
 </html>
