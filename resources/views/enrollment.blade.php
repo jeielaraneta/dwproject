@@ -7,15 +7,10 @@
             <div class="card">
                 <div class="card-header">Enrollment</div>
 
-                <div class="card-body" id="container">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                </div>
+                <enrollment-component></enrollment-component>
+                
             </div>
         </div>
     </div>
-</div>
+</div>d
 @endsection

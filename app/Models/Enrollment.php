@@ -29,7 +29,7 @@ class Enrollment extends Model
             'college' => $countPerCollege,
             'courses' => $countPerCourses
         );
-        return json_encode($output);
+        return $output;
     }
 
     public function getData(){

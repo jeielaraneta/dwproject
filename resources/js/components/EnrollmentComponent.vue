@@ -6,13 +6,6 @@
     export default {
         mounted() {
             console.log('Component mounted.')
-        },
-        methods: {
-            read() {
-                axios.get('/enrollment-data').then(({ data }) => {
-                    console.log(data)
-                });
-            }
         }
     }
 </script>

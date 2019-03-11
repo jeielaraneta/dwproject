@@ -25,8 +25,13 @@ class EnrollmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
+        
+        return view('enrollment');
+    }
+
+    public function showEnrollmentData(){
+
         $data = $this->enrollment->getData();
 
         $uniqueSchoolYears = $this->enrollment->getUniqueSchoolYear($data);
@@ -41,7 +46,7 @@ class EnrollmentController extends Controller
         
         $output = $this->enrollment->setDataModel($countPerSchoolYear, $countPerSemester, $countPerCollege, $countPerCourses);
 
-        return view('enrollment', ['data' => $output]);
+        return response()->json($output);
     }
 
 }
