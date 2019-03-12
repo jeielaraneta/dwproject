@@ -92,7 +92,5 @@
             @yield('content')
         </main>
     </div>
-    <script src="{{ mix('js/app.js')}}"></script>
-    <script src="{{ mix('js/enrollmentDashboard.js')}}"></script>
 </body>
 </html>
