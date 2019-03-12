@@ -6,12 +6,28 @@ $(document).ready(function () {
         }
     });
 
-    function setPerCollegeData(enrollmentArr) {
-
-    }
-
     function setPerCourseData(enrollmentArr) {
     	
+    }
+
+    function setPerCollegeData(enrollmentArr) {
+    	
+    	var perCollege = [];
+    	$.each(enrollmentArr, function(schoolYear, semester) {
+    		$.each(semester, function(sem, college) {
+
+    			var dataArray = [];
+    			var stringSem = (sem == '0') ? 'summer' : (sem == '1') ? 'firstSem' : 'secondSem';
+
+    			$.each(college, function(key, value){
+    				dataArray.push({"name": key, "y": value});
+    			})
+
+    			perCollege.push({ "id":stringSem+schoolYear, "data": dataArray });
+    			
+    		});
+    	});
+    	return perCollege;
     }
 
     function setPerSemesterData(enrollmentArr) {
@@ -47,8 +63,10 @@ $(document).ready(function () {
 
            	var perSchoolYear = setPerSchoolYearData(enrollment.school_year);
            	var perSemester = setPerSemesterData(enrollment.semester);
+           	var perCollege = setPerCollegeData(enrollment.college);
            	console.log(perSchoolYear);
            	console.log(perSemester);
+           	console.log(perCollege);
 
            	// Create the chart
 			Highcharts.chart('container', {
@@ -81,7 +99,7 @@ $(document).ready(function () {
 			        data: perSchoolYear
 			    }],
 			    drilldown: {
-			            series: perSemester/*[{
+			            series: perSemester.concat(perCollege) /*[{
 			                id: '2017-2018',
 			                name: 'Population',
 			                data: [{

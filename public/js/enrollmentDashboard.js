@@ -100,7 +100,30 @@ $(document).ready(function () {
     }
   });
 
-  function getFirstDrilldown(enrollmentArr) {
+  function setPerCollegeData(enrollmentArr) {
+    var perCollege = [];
+    $.each(enrollmentArr, function (schoolYear, semester) {
+      $.each(semester, function (sem, college) {
+        var dataArray = [];
+        var stringSem = sem == '0' ? 'summer' : sem == '1' ? 'firstSem' : 'secondSem';
+        $.each(college, function (key, value) {
+          dataArray.push({
+            "name": key,
+            "y": value
+          });
+        });
+        perCollege.push({
+          "id": stringSem + schoolYear,
+          "data": dataArray
+        });
+      });
+    });
+    return perCollege;
+  }
+
+  function setPerCourseData(enrollmentArr) {}
+
+  function setPerSemesterData(enrollmentArr) {
     var perSemester = [];
     $.each(enrollmentArr, function (key, value) {
       perSemester.push({
@@ -130,10 +153,12 @@ $(document).ready(function () {
     dataType: 'json',
     success: function success(enrollment) {
       console.log(enrollment);
-      var perSchoolYear = setSeriesData(enrollment.school_year);
-      var perSemester = getFirstDrilldown(enrollment.semester);
+      var perSchoolYear = setPerSchoolYearData(enrollment.school_year);
+      var perSemester = setPerSemesterData(enrollment.semester);
+      var perCollege = setPerCollegeData(enrollment.college);
       console.log(perSchoolYear);
-      console.log(perSemester); // Create the chart
+      console.log(perSemester);
+      console.log(perCollege); // Create the chart
 
       Highcharts.chart('container', {
         chart: {
@@ -162,7 +187,7 @@ $(document).ready(function () {
           data: perSchoolYear
         }],
         drilldown: {
-          series: perSemester
+          series: perSemester.concat(perCollege)
           /*[{
           id: '2017-2018',
           name: 'Population',
@@ -312,7 +337,7 @@ $(document).ready(function () {
     }
   });
 
-  function setSeriesData(enrollmentArr) {
+  function setPerSchoolYearData(enrollmentArr) {
     var perSchoolYear = [];
     $.each(enrollmentArr, function (key, value) {
       perSchoolYear.push({
