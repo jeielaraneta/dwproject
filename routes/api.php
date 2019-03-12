@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use dwproject\Models\Enrollment;
 
 /*
 |--------------------------------------------------------------------------
