@@ -100,20 +100,50 @@ $(document).ready(function () {
     }
   });
 
+  function setLastDrilldownId(college) {
+    if (college.match(' ')) {
+      var idArr = [];
+      var words = college.split(' ');
+      $.each(words, function (key, value) {
+        idArr.push(value.toUpperCase().charAt(0));
+      });
+      return idArr.join('');
+    } else {
+      var id = college.substr(0, 4);
+      return id;
+    }
+  }
+
+  function removeSpecialCharSchoolYear(schoolYear) {
+    var newSchoolYear = schoolYear.replace('-', '');
+    return newSchoolYear;
+  }
+
+  function setPerCourseData(enrollmentArr) {
+    var perCourse = [];
+    $.each(enrollmentArr, function (schoolYear, semester) {
+      $.each(semester, function (sem, college) {
+        $.each(college, function (course, value) {});
+      });
+    });
+  }
+
   function setPerCollegeData(enrollmentArr) {
     var perCollege = [];
     $.each(enrollmentArr, function (schoolYear, semester) {
       $.each(semester, function (sem, college) {
+        var sy = removeSpecialCharSchoolYear(schoolYear);
         var dataArray = [];
-        var stringSem = sem == '0' ? 'summer' : sem == '1' ? 'firstSem' : 'secondSem';
+        var stringSem = sem == '0' ? 'S' : sem == '1' ? 'FS' : 'SS';
         $.each(college, function (key, value) {
           dataArray.push({
             "name": key,
-            "y": value
+            "y": value,
+            "drilldown": stringSem + sy + setLastDrilldownId(key)
           });
         });
         perCollege.push({
-          "id": stringSem + schoolYear,
+          "id": stringSem + sy,
           "data": dataArray
         });
       });
@@ -121,26 +151,25 @@ $(document).ready(function () {
     return perCollege;
   }
 
-  function setPerCourseData(enrollmentArr) {}
-
   function setPerSemesterData(enrollmentArr) {
     var perSemester = [];
     $.each(enrollmentArr, function (key, value) {
+      var sy = removeSpecialCharSchoolYear(key);
       perSemester.push({
         "id": key,
         "name": "Population",
         "data": [{
           "name": "Summer",
           "y": value[0],
-          "drilldown": "summer" + key
+          "drilldown": "S" + sy
         }, {
           "name": "First Semester",
           "y": value[1],
-          "drilldown": "firstSem" + key
+          "drilldown": "FS" + sy
         }, {
           "name": "Second Semester",
           "y": value[2],
-          "drilldown": "secondSem" + key
+          "drilldown": "SS" + sy
         }]
       });
     });
@@ -158,7 +187,8 @@ $(document).ready(function () {
       var perCollege = setPerCollegeData(enrollment.college);
       console.log(perSchoolYear);
       console.log(perSemester);
-      console.log(perCollege); // Create the chart
+      console.log(perCollege); //console.log(setLastDrilldownId('Engineering'))       
+      // Create the chart
 
       Highcharts.chart('container', {
         chart: {
