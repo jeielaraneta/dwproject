@@ -25,6 +25,7 @@ $(document).ready(function () {
 
     				perCourse.push({ 
 	    				"id":stringSem+sy+setLastDrilldownId(college),
+	    				"name": "Per Course",
 	    				"data": dataArray 
 	    			});
     				
@@ -53,7 +54,8 @@ $(document).ready(function () {
     			})
 
     			perCollege.push({ 
-    				"id":stringSem+sy, 
+    				"id":stringSem+sy,
+    				"name": "Per College",
     				"data": dataArray 
     			});
     			
@@ -69,7 +71,7 @@ $(document).ready(function () {
     		var sy = removeSpecialCharSchoolYear(key)
     		perSemester.push({ 
     			"id":key, 
-    			"name": "Population", 
+    			"name": "Per Semester", 
     			"data": [{
 		    				"name": "Summer",
 		    				"y": value[0],
@@ -142,7 +144,7 @@ $(document).ready(function () {
 			    },
 
 			    series: [{
-			        name: 'Population of Enrollees',
+			        name: 'Per School Year',
 			        colorByPoint: true,
 			        data: perSchoolYear
 			    }],

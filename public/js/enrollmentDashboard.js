@@ -116,6 +116,7 @@ $(document).ready(function () {
           });
           perCourse.push({
             "id": stringSem + sy + setLastDrilldownId(college),
+            "name": "Per Course",
             "data": dataArray
           });
         });
@@ -140,6 +141,7 @@ $(document).ready(function () {
         });
         perCollege.push({
           "id": stringSem + sy,
+          "name": "Per College",
           "data": dataArray
         });
       });
@@ -153,7 +155,7 @@ $(document).ready(function () {
       var sy = removeSpecialCharSchoolYear(key);
       perSemester.push({
         "id": key,
-        "name": "Population",
+        "name": "Per Semester",
         "data": [{
           "name": "Summer",
           "y": value[0],
@@ -194,10 +196,11 @@ $(document).ready(function () {
       var perSemester = setPerSemesterData(enrollment.semester);
       var perCollege = setPerCollegeData(enrollment.college);
       var perCourse = setPerCourseData(enrollment.courses);
-      console.log(perSchoolYear);
+      /*console.log(perSchoolYear);
       console.log(perSemester);
       console.log(perCollege);
-      console.log(perCourse); // Create the chart
+      console.log(perCourse);*/
+      // Create the chart
 
       Highcharts.chart('container', {
         chart: {
@@ -221,156 +224,12 @@ $(document).ready(function () {
           }
         },
         series: [{
-          name: 'Population of Enrollees',
+          name: 'Per School Year',
           colorByPoint: true,
           data: perSchoolYear
         }],
         drilldown: {
           series: perSemester.concat(perCollege, perCourse)
-          /*[{
-          id: '2017-2018',
-          name: 'Population',
-          data: [{
-          name: 'Summer',
-          y: 200,
-          drilldown: 'summer2018'
-          }, {
-          name: '1st Semester',
-          y: 100,
-          drilldown: 'firstSem2018'
-          }, {
-          name: '2nd Semester',
-          y: 150,
-          drilldown: 'secondSem2018'
-          }
-          ]
-          }, {
-          id: '2018-2019',
-          name: 'Population',
-          data: [{
-          name: 'Summer',
-          y: 100,
-          drilldown: 'summer2019'
-          }, {
-          name: '1st Semester',
-          y: 300,
-          drilldown: 'firstSem2019'
-          }, {
-          name: '2nd Semester',
-          y: 200,
-          drilldown: 'secondSem2019'
-          }
-          ]
-          }, {
-          id: 'summer2019',
-          data: [{
-          name: 'Engineering',
-          y: 30
-          }, {
-          name: 'Computer Studies',
-          y: 30
-          }, {
-          name: 'Business and Public Administration',
-          y: 10
-          }, {
-          name: 'Education',
-          y: 10
-          }, {
-          name: 'Arts and Sciences',
-          y: 20
-          }]
-          }, {
-          id: 'firstSem2019',
-          data: [{
-          name: 'Engineering',
-          y: 150
-          }, {
-          name: 'Computer Studies',
-          y: 150
-          }, {
-          name: 'Business and Public Administration',
-          y: 100
-          }, {
-          name: 'Education',
-          y: 100
-          }, {
-          name: 'Arts and Sciences',
-          y: 100
-          }]
-          }, {
-          id: 'secondSem2019',
-          data: [{
-          name: 'Engineering',
-          y: 30
-          }, {
-          name: 'Computer Studies',
-          y: 30
-          }, {
-          name: 'Business and Public Administration',
-          y: 40
-          }, {
-          name: 'Education',
-          y: 30
-          }, {
-          name: 'Arts and Sciences',
-          y: 70
-          }]
-          }, {
-          id: 'summer2018',
-          data: [{
-          name: 'Engineering',
-          y: 30
-          }, {
-          name: 'Computer Studies',
-          y: 45
-          }, {
-          name: 'Business and Public Administration',
-          y: 35
-          }, {
-          name: 'Education',
-          y: 25
-          }, {
-          name: 'Arts and Sciences',
-          y: 65
-          }]
-          }, {
-          id: 'firstSem2018',
-          data: [{
-          name: 'Engineering',
-          y: 10
-          }, {
-          name: 'Computer Studies',
-          y: 20
-          }, {
-          name: 'Business and Public Administration',
-          y: 30
-          }, {
-          name: 'Education',
-          y: 25
-          }, {
-          name: 'Arts and Sciences',
-          y: 15
-          }]
-          }, {
-          id: 'secondSem2018',
-          data: [{
-          name: 'Engineering',
-          y: 10
-          }, {
-          name: 'Computer Studies',
-          y: 30
-          }, {
-          name: 'Business and Public Administration',
-          y: 50
-          }, {
-          name: 'Education',
-          y: 10
-          }, {
-          name: 'Arts and Sciences',
-          y: 50
-          }]
-          }]*/
-
         }
       });
     }
