@@ -3,17 +3,21 @@
 namespace dwproject\Http\Controllers;
 
 use Illuminate\Http\Request;
+use dwproject\Models\Employee;
+use Illuminate\Database\Eloquent\Collection;
 
 class EmployeeController extends Controller
 {
+    protected $employee;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Employee $e)
     {
         $this->middleware('auth');
+        $this->employee = $e;
     }
 
     /**
@@ -26,69 +30,16 @@ class EmployeeController extends Controller
         return view('employee');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function showEmployeeData(){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $data = $this->employee->getData();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $countPerInvolvement = $this->employee->getEmployeeCountPerInvolvement($data);
+        $countPerDepartment = $this->employee->getEmployeeCountPerDepartment($data);
+        $countPerCategory = $this->employee->getEmployeeCountPerCategory($data);
+        
+        $output = $this->employee->setDataModel($countPerInvolvement, $countPerDepartment, $countPerCategory);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json($countPerCategory);
     }
 }
