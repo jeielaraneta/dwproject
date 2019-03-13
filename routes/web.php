@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/enrollment', 'EnrollmentController@index')->name('enrollment');
 
 Route::get('/enrollment-data', 'EnrollmentController@showEnrollmentData')->name('enrollment-data');
+
+Route::get('/employee', 'EmployeeController@index')->name('employee');

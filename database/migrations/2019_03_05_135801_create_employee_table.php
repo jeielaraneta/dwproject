@@ -15,9 +15,10 @@ class CreateEmployeeTable extends Migration
     {
         Schema::create('employee', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->enum('involvement', ['NT', 'T']);
             $table->enum('category', ['Permanent', 'Casual', 'J.O', 'COS']);
             $table->string('department', 75);
-            $table->string('academic_rank', 75);
+            $table->string('academic_rank', 75)->nullable();
             $table->timestamps();
         });
     }
