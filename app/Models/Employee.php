@@ -104,32 +104,18 @@ class Employee extends Model
         $output = array();
         $collections = array();
 
-        $collections = $data->groupBy(['involvement', function($key, $value) {
-        	return $key->department;
+        $collections = $data->groupBy(['involvement','department', 'category', function($key, $item) {
+        	return $key->id;
         }]);
 
-        /*foreach ($collection as $key => $value) {
-        	foreach ($value as $a => $b) {
-
-
-        		$output[$key][$a] = count($b);
-        	}
-        }*/
-
-        foreach ($collections as $involvement => $departments) {
-        	foreach ($departments as $department => $b) {
-
-        		foreach ($b as $c => $d) {
-        			$output[$involvement][$department][$c] = $d->category;
-        		}
-        		
-
-        		//$try[$involvement][$department] = $b;
-        		
+        foreach ($collections as $involvementKey => $departments) {
+        	foreach ($departments as $departmentKey => $categories) {
+                foreach ($categories as $categoryKey => $category) {
+                    $output[$involvementKey][$departmentKey][$categoryKey] = count($category);
+                }
+        	
         	}
         }
-
-       
 
         return $output;
     }

@@ -40,6 +40,6 @@ class EmployeeController extends Controller
         
         $output = $this->employee->setDataModel($countPerInvolvement, $countPerDepartment, $countPerCategory);
 
-        return response()->json($countPerCategory);
+        return response()->json($output);
     }
 }
