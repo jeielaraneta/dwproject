@@ -14,12 +14,13 @@ class Employee extends Model
         'involvement', 'category', 'department', 'academic_rank'
     ];
 
-    public function setDataModel($countPerInvolvement, $countPerDepartment, $countPerCategory) {
+    public function setDataModel($countPerInvolvement, $countPerDepartment, $countPerCategory, $countPerAcadRank) {
         
         $output = array(
             'involvement' => $countPerInvolvement,
             'department' => $countPerDepartment,
-            'category' => $countPerCategory
+            'category' => $countPerCategory,
+            'academic_rank' => $countPerAcadRank
         );
         return $output;
     }
@@ -27,42 +28,6 @@ class Employee extends Model
     public function getData(){
         $data = Employee::get();
         return $data;
-    }
-
-    public function getUniqueInvolvement($data) {
-        
-        $rows = $data->unique('involvement');
-        $involvementArr = array();
-
-        foreach ($rows as $row => $value) {
-            $involvementArr[] = $value->involvement;
-        }
-
-        return $involvementArr;
-    }
-
-    public function getUniqueDepartment($data) {
-        
-        $rows = $data->unique('department');
-        $departmentsArr = array();
-
-        foreach ($rows as $row => $value) {
-            $departmentsArr[] = $value->department;
-        }
-
-        return $departmentsArr;
-    }
-
-    public function getUniqueCategory($data) {
-        
-        $rows = $data->unique('category');
-        $categoriesArr = array();
-
-        foreach ($rows as $row => $value) {
-            $categoriesArr[] = $value->category;
-        }
-
-        return $categoriesArr;
     }
 
     public function getEmployeeCountPerInvolvement($data) {
@@ -112,6 +77,27 @@ class Employee extends Model
         	foreach ($departments as $departmentKey => $categories) {
                 foreach ($categories as $categoryKey => $category) {
                     $output[$involvementKey][$departmentKey][$categoryKey] = count($category);
+                }
+        	
+        	}
+        }
+
+        return $output;
+    }
+
+    public function getEmployeeCountPerAcadRank($data) {
+
+        $output = array();
+        $collections = array();
+
+        $collections = $data->where('involvement', 'T')->groupBy(['department', 'category', 'academic_rank', function($key, $item) {
+        	return $key->id;
+        }]);
+
+        foreach ($collections as $departmentKey => $departments) {
+        	foreach ($departments as $categoryKey => $categories) {
+                foreach ($categories as $acadRankKey => $acadRank) {
+                    $output[$departmentKey][$categoryKey][$acadRankKey] = count($acadRank);
                 }
         	
         	}

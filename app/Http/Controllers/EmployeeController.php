@@ -37,8 +37,9 @@ class EmployeeController extends Controller
         $countPerInvolvement = $this->employee->getEmployeeCountPerInvolvement($data);
         $countPerDepartment = $this->employee->getEmployeeCountPerDepartment($data);
         $countPerCategory = $this->employee->getEmployeeCountPerCategory($data);
+        $countPerAcadRank = $this->employee->getEmployeeCountPerAcadRank($data);
         
-        $output = $this->employee->setDataModel($countPerInvolvement, $countPerDepartment, $countPerCategory);
+        $output = $this->employee->setDataModel($countPerInvolvement, $countPerDepartment, $countPerCategory, $countPerAcadRank);
 
         return response()->json($output);
     }
