@@ -59,7 +59,7 @@
                                 <a class="nav-link" href="{{ route('employee') }}">Employee</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Budget Allocation</a>
+                                <a class="nav-link" href="{{ route('budget') }}">Budget Allocation</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Research</a>

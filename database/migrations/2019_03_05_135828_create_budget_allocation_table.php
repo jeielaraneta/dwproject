@@ -17,6 +17,7 @@ class CreateBudgetAllocationTable extends Migration
             $table->bigIncrements('id');
             $table->string('school_year', 20);
             $table->string('department', 75);
+            $table->integer('amount');
             $table->timestamps();
         });
     }

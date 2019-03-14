@@ -23,6 +23,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('enrollment-component', require('./components/EnrollmentComponent.vue').default);
 Vue.component('employee-component', require('./components/EmployeeComponent.vue').default);
+Vue.component('budget_allocation-component', require('./components/BudgetAllocationComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

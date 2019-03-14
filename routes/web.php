@@ -26,3 +26,7 @@ Route::get('/enrollment-data', 'EnrollmentController@showEnrollmentData')->name(
 Route::get('/employee', 'EmployeeController@index')->name('employee');
 
 Route::get('/employee-data', 'EmployeeController@showEmployeeData')->name('employee-data');
+
+Route::get('/budget', 'budgetAllocationController@index')->name('budget');
+
+Route::get('/budget-data', 'budgetAllocationController@showBudgetAllocationData')->name('budget-data');

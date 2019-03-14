@@ -33,8 +33,6 @@ class Employee extends Model
     public function getEmployeeCountPerInvolvement($data) {
 
         $output = array();
-        $collection = array();
-
         $collection = $data->groupBy(['involvement', function($key, $value) {
         	return $value;
         }]);
@@ -49,8 +47,6 @@ class Employee extends Model
     public function getEmployeeCountPerDepartment($data) {
 
         $output = array();
-        $collection = array();
-
         $collection = $data->groupBy(['involvement', function($key, $value) {
         	return $key->department;
         }]);
@@ -67,8 +63,6 @@ class Employee extends Model
     public function getEmployeeCountPerCategory($data) {
 
         $output = array();
-        $collections = array();
-
         $collections = $data->groupBy(['involvement','department', 'category', function($key, $item) {
         	return $key->id;
         }]);
@@ -88,8 +82,6 @@ class Employee extends Model
     public function getEmployeeCountPerAcadRank($data) {
 
         $output = array();
-        $collections = array();
-
         $collections = $data->where('involvement', 'T')->groupBy(['department', 'category', 'academic_rank', function($key, $item) {
         	return $key->id;
         }]);
