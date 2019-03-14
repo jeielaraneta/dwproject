@@ -1778,7 +1778,7 @@ function setPerInvolvementData(involvementArr) {
   var perInvolvement = [];
   $.each(involvementArr, function (key, value) {
     perInvolvement.push({
-      "name": key,
+      "name": key == 'NT' ? 'Non-Teaching' : 'Teaching',
       "y": value,
       "drilldown": key
     });
@@ -1866,14 +1866,11 @@ function setDashboard() {
       var perInvolvement = setPerInvolvementData(employee.involvement);
       var perDepartment = setPerDepartmentData(employee.department);
       var perCategory = setPerCategoryData(employee.category);
-      var perAcadRank = setPerAcadRankData(employee.academic_rank);
-      console.log(perDepartment);
-      console.log(perCategory);
-      console.log(perAcadRank); // Create the chart
+      var perAcadRank = setPerAcadRankData(employee.academic_rank); // Create the chart
 
       Highcharts.chart('container', {
         chart: {
-          type: 'column'
+          type: 'pie'
         },
         title: {
           text: 'Employee Population'
