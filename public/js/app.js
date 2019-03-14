@@ -1816,9 +1816,7 @@ function setDashboard() {
     dataType: 'json',
     success: function success(budgetAllocation) {
       var perSchoolYear = setPerSchoolYearData(budgetAllocation.sy);
-      var perDepartment = setPerDepartmentData(budgetAllocation.department);
-      console.log(perSchoolYear);
-      console.log(perDepartment); // Create the chart
+      var perDepartment = setPerDepartmentData(budgetAllocation.department); // Create the chart
 
       Highcharts.chart('container', {
         chart: {
