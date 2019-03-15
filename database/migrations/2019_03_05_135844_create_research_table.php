@@ -16,6 +16,7 @@ class CreateResearchTable extends Migration
         Schema::create('research', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('college', 50);
+            $table->integer('total_count');
             $table->timestamps();
         });
     }

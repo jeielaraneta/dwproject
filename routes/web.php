@@ -30,3 +30,7 @@ Route::get('/employee-data', 'EmployeeController@showEmployeeData')->name('emplo
 Route::get('/budget', 'budgetAllocationController@index')->name('budget');
 
 Route::get('/budget-data', 'budgetAllocationController@showBudgetAllocationData')->name('budget-data');
+
+Route::get('/research', 'ResearchController@index')->name('research');
+
+Route::get('/research-data', 'ResearchController@showResearchData')->name('budget-data');

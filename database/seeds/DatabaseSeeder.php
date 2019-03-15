@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
         	UsersTableSeeder::class,
         	EnrollmentTableSeeder::class,
             EmployeeTableSeeder::class,
-            BudgetAllocationSeeder::class
+            BudgetAllocationSeeder::class,
+            ResearchTableSeeder::class
         ]);
     }
 }
