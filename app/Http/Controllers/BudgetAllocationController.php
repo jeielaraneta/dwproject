@@ -3,82 +3,46 @@
 namespace dwproject\Http\Controllers;
 
 use Illuminate\Http\Request;
+use dwproject\Models\BudgetAllocation;
+use Illuminate\Database\Eloquent\Collection;
 
 class BudgetAllocationController extends Controller
 {
+
+    protected $budgetAllocation;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(BudgetAllocation $ba)
     {
         $this->middleware('auth');
+        $this->budgetAllocation = $ba;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
-        //
+        return view('budget_allocation');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function showBudgetAllocationData(){
+
+        $data = $this->budgetAllocation->getData();
+
+        $baPerSY = $this->budgetAllocation->getBudgetAllocationPerSY($data);
+        $baPerDept = $this->budgetAllocation->getBudgetAllocationPerDept($data);
+
+        $output = $this->budgetAllocation->setDataModel($baPerSY, $baPerDept);
+
+        return response()->json($output);
+      
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }
